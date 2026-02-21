@@ -29,5 +29,8 @@ urlpatterns = [
     path('admindashboard/add_dep/',views.add_dep,name='add_dep'),
     path('admindashboard/show_dep/',views.show_dep,name='show_dep'),
     path('admindashboard/save_dep/',views.save_dep,name='save_dep'),
+    path('admindashboard/add_emp/',views.add_emp,name='add_emp'),
+    path('admindashboard/save_emp/',views.save_emp,name='save_emp'),
+    path('admindashboard/show_emp/',views.show_emp,name='show_emp'),
 
 ]
