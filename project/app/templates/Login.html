@@ -1,0 +1,69 @@
+{% extends "index.html" %}
+
+{% block title %}
+<title>Login Page</title>
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+
+      <div class="card shadow-sm mt-5">
+        <div class="card-body p-4">
+
+          <h3 class="text-center mb-4">Login</h3>
+
+          {% if x %}
+            <div class="alert alert-info">
+              {{ x }}
+            </div>
+          {% endif %}
+
+          {% if msg %}
+            <div class="alert alert-danger">
+              {{ msg }}
+            </div>
+          {% endif %}
+
+          <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" 
+                     class="form-control" 
+                     placeholder="Enter Email" 
+                     name="email">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" 
+                     class="form-control" 
+                     placeholder="Enter Password" 
+                     name="password">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+              Login
+            </button>
+            <div class="text-center mt-3">
+              <small class="text-muted">
+                Don’t have an account?
+              </small>
+              <a href="{% url 'Registration' %}" class="text-decoration-none fw-semibold">
+                Sign Up
+              </a>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
