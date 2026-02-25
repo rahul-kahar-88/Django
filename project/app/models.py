@@ -31,3 +31,11 @@ class Add_Employee(models.Model):
     Code=models.CharField(max_length=20)
     Dept=models.CharField(max_length=20)
 
+class Query(models.Model):
+    Name=models.CharField(max_length=40)
+    Email=models.EmailField(max_length=40)
+    Emp_id=models.CharField(max_length=40)
+    Dept=models.CharField(max_length=40)
+    Query=models.CharField(max_length=80)
+    Status=models.BooleanField(default=False)
+    
