@@ -28,6 +28,8 @@ urlpatterns = [
     path('Login/',views.Login,name='Login'),
     path('userdeshboard/',views.userdeshboard,name='userdeshboard'),
     path('logout/',views.logout,name='logout'),
+
+
     path('admindashboard/',views.admindashboard,name='admindashboard'),
     path('admindashboard/add_dep/',views.add_dep,name='add_dep'),
     path('admindashboard/show_dep/',views.show_dep,name='show_dep'),
@@ -35,6 +37,11 @@ urlpatterns = [
     path('admindashboard/add_emp/',views.add_emp,name='add_emp'),
     path('admindashboard/save_emp/',views.save_emp,name='save_emp'),
     path('admindashboard/show_emp/',views.show_emp,name='show_emp'),
+    path('admindashboard/emp_all_query/',views.emp_all_query,name='emp_all_query'),
+    path('admindashboard/emp_all_query/reply/<int:pk>/',views.reply,name='reply'),
+    path('admindashboard/emp_all_query/a_reply/<int:pk>/',views.a_reply,name='a_reply'),
+
+
     path('empdashboard/',views.empdashboard,name='empdashboard'),
     path('empdashboard/profile/',views.profile,name='profile'),
     path('empdashboard/setting/',views.setting,name='setting'),
@@ -43,6 +50,10 @@ urlpatterns = [
     path('empdashboard/allquery/',views.allquery,name='allquery'),
     path('empdashboard/pendingquery/',views.pendingquery,name='pendingquery'),
     path('empdashboard/donequery/',views.donequery,name='donequery'),
+    path('empdashboard/edit_all_query/<int:pk>/',views.edit_all_query,name='edit_all_query'),
+    path('empdashboard/updated_query/<int:pk>/', views.updated_query, name='updated_query'),
+    path('empdashboard/emp_q_delete/<int:id>/', views.emp_q_delete, name='emp_q_delete'),
+
 
   
 

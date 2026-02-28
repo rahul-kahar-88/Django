@@ -37,5 +37,6 @@ class Query(models.Model):
     Emp_id=models.CharField(max_length=40)
     Dept=models.CharField(max_length=40)
     Query=models.CharField(max_length=80)
-    Status=models.BooleanField(default=False)
+    Status=models.CharField(default="pending")
+    Reply=models.CharField(max_length=80,null=True)
     

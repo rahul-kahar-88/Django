@@ -93,6 +93,15 @@
 
     <!-- ===== CONTENT ===== -->
     <div class="content">
+               {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
        {% if profile %}
       <div class="container">
   <div class="row justify-content-start">
@@ -310,19 +319,84 @@
 
                   <td>
                       <button type="button" class="btn btn-sm btn-outline-primary">
-                          Edit
-                      </button>
-                  </td>
-
-                  <td>
-                      <button type="button" class="btn btn-sm btn-outline-danger">
-                          Delete
+                           {% if i.Reply %}
+                          NA
+                          {% else %}
+                              
+                          
+                             <a href=" {% url 'edit_all_query' i.id %}">Edit</a>
+                          
+                          {% endif %}
+                        </button>
+                    </td>
+                    
+                    <td>
+                        <button type="button" class="btn btn-sm btn-outline-danger">
+                            {% if i.Reply %}
+                           NA
+                           {% else %}
+                               
+                           
+                              <a href="{% url 'emp_q_delete' i.id %}">   Delete</a>
+                           
+                           
+                           {% endif %}
                       </button>
                   </td>
               </tr>
                 {% endfor %}
             </tbody>
         </table>
+                         {% if old_querydata %}
+                                    <form action="{% url 'updated_query' old_querydata.id %}" method="POST"
+                                        class="card p-4 shadow">
+
+                                        {% csrf_token %}
+
+                                        <h4 class="text-center mb-4">Employee Query</h4>
+
+                                        <!-- Name -->
+                                        <div class="mb-3">
+                                            <label class="form-label">Name</label>
+                                            <input type="text" name="name" value="{{old_querydata.Name}}"
+                                                class="form-control" readonly>
+                                        </div>
+
+                                        <!-- Email -->
+                                        <div class="mb-3">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" name="email" value="{{old_querydata.Email}}"
+                                                class="form-control" readonly>
+                                        </div>
+
+                                        <!-- Department -->
+                                        <div class="mb-3">
+                                            <label class="form-label">Department</label>
+                                            <select name="department" class="form-select">
+                                                <option value="">Select Department</option>
+                                                {% for i in emp_dept %}
+                                                <option value="{{i.Dep_name}}">{{i.Dep_name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <!-- Query -->
+                                        <div class="mb-3">
+                                            <label class="form-label">Your Query</label>
+                                            <textarea name="query" class="form-control" rows="4"
+                                                placeholder="Write your query...">{{old_querydata.Query}}</textarea>
+                                        </div>
+
+                                        <!-- Submit -->
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary">Updata</button>
+                                        </div>
+
+                                    </form>
+                                    {% endif %}
+                    
+               
+
     </div>
 </div>
      {% elif pendingquery %}
