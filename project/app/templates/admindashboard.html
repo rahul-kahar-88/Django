@@ -287,6 +287,8 @@
         
         {% elif emp_all_query %}
          <div class="container mt-4">
+         
+            </form>
 
            <h4 class="mb-3">All Queries</h4>
 
@@ -374,12 +376,11 @@
             </tbody>
         </table>
         
-    </div>
-</div>          
-
-{% if q_data %}
-<div class="card mt-3 shadow-sm">
-    <div class="card-body">
+        
+        
+        {% if q_data %}
+        <div class="card mt-3 shadow-sm">
+            <div class="card-body">
         
         <h5 class="mb-3">Reply to Query</h5>
 
@@ -389,57 +390,59 @@
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Name</label>
                             <input type="text" 
-                                class="form-control" 
-                                name="name" 
-                                value="{{ q_data.Name }}" 
-                                readonly>
+                            class="form-control" 
+                            name="name" 
+                            value="{{ q_data.Name }}" 
+                            readonly>
                         </div>
-
+                        
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Email</label>
                             <input type="email" 
-                                class="form-control" 
-                                name="email" 
-                                value="{{ q_data.Email }}" 
-                                readonly>
+                            class="form-control" 
+                            name="email" 
+                            value="{{ q_data.Email }}" 
+                            readonly>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Department</label>
                             <input type="text" 
-                                class="form-control" 
-                                name="dept" 
+                            class="form-control" 
+                            name="dept" 
                                 value="{{ q_data.Dept }}" 
                                 readonly>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Query</label>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Query</label>
+                                <textarea class="form-control" 
+                                rows="3" 
+                                readonly>{{ q_data.Query }}</textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Your Reply</label>
                             <textarea class="form-control" 
-                                    rows="3" 
-                                    readonly>{{ q_data.Query }}</textarea>
+                            name="reply" 
+                            rows="4" 
+                            placeholder="Write your reply here..."></textarea>
                         </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Your Reply</label>
-                            <textarea class="form-control" 
-                                    name="reply" 
-                                    rows="4" 
-                                    placeholder="Write your reply here..."></textarea>
-                        </div>
-
+                        
                         <button type="submit" class="btn btn-primary" >
                             
                             Reply
                         </button>
-
+                        
                     </form>
-
+                    
                     
                 </div>
             </div>
-                    {% endif %}
-                    
+            {% endif %}
+            
+        </div>
+        </div>          
 
            
 

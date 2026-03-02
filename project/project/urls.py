@@ -53,6 +53,7 @@ urlpatterns = [
     path('empdashboard/edit_all_query/<int:pk>/',views.edit_all_query,name='edit_all_query'),
     path('empdashboard/updated_query/<int:pk>/', views.updated_query, name='updated_query'),
     path('empdashboard/emp_q_delete/<int:id>/', views.emp_q_delete, name='emp_q_delete'),
+    path('empdashboard/allquery/search/', views.search, name='search'),
 
 
   

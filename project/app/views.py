@@ -411,3 +411,19 @@ def emp_q_delete(req, id):
 
     else:
         return redirect('Login')
+
+
+
+def search(req):
+    if 'emp_id' in req.session:
+        e_id = req.session.get('emp_id')
+        emp_data = Add_Employee.objects.get(id=e_id)
+        if req.method == 'POST':
+          s=req.POST.get('search')
+
+        #   all_query = Query.objects.filter(Email=emp_data.Email,Query=s)
+          all_query = Query.objects.filter(Email__icontains=emp_data.Email,Query__icontains=s)
+          return render(req, 'empdashboard.html', {'data':emp_data,'allquery':True , 'all_query':all_query})
+    else:
+        return redirect('Login')
+   

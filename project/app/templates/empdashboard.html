@@ -285,6 +285,14 @@
 
     <div class="container mt-4">
 
+           <form action="{% url 'search' %}" method="post">
+               {% csrf_token %}
+                <input type="text" name="search">
+                <button>search</button>
+                <br>
+                <a href="{% url 'allquery' %}">reset</a>
+                <br>
+
     <h4 class="mb-3">All Queries</h4>
 
     <div class="table-responsive">
