@@ -2,7 +2,7 @@ from django.shortcuts import render ,redirect
 from app.models import *
 from django.contrib import messages
 from django.core.mail import send_mail
-
+from django.views.decorators.cache import never_cache
 
 
 # Create your views here.
@@ -130,7 +130,7 @@ def userdeshboard(req):
         x=req.session.get('user_id')
         userdata = Employee.objects.get(id=x)
         return render(req, 'userdeshboard.html',{'data':userdata})
-    return render('Login')
+    return redirect('Login')
 
 def admindashboard(req):
     if 'a_data' in req.session:
@@ -142,12 +142,16 @@ def admindashboard(req):
 
 
 
-
+@never_cache
 def logout(req):
     if 'user_id' in req.session:
         req.session.flush()
         return redirect('Login')
-    return redirect('Login')
+    elif 'a_data' in req.session:
+        req.session.flush()
+        return redirect('Login')
+    else:
+        return redirect('Login')
 
 
 def add_dep(req):
