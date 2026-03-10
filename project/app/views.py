@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 
 
+
 # Create your views here.
 
 def index(req):
@@ -137,6 +138,8 @@ def admindashboard(req):
         return render(req,'admindashboard.html',{'data':a_data})
     else:
         return redirect('Login')
+    
+
 
 
 
@@ -260,7 +263,40 @@ def a_reply(req , pk):
         a_data = req.session.get('a_data')
         emp_all_query=Query.objects.all()
         return render(req, 'admindashboard.html', {'a_data':a_data  , 'emp_all_query':emp_all_query} )
-        
+    
+def add_item(req):
+    if 'a_data' in req.session:
+        a_data=req.session.get('a_data')
+        if req.method == "POST":
+            name = req.POST.get('item_name')
+            desc = req.POST.get('item_desc')
+            price = req.POST.get('item_price')
+            color = req.POST.get('item_color')
+            category = req.POST.get('item_category')
+            quantity = req.POST.get('item_quantity')
+            image = req.FILES.get('item_image')
+
+            Item.objects.create(
+                item_name=name,
+                item_desc=desc,
+                item_price=price,
+                item_color=color,
+                item_category=category,
+                item_quantity=quantity,
+                item_image=image
+            )
+            return redirect('admindashboard')
+        else:
+            a_data=req.session.get('a_data')
+            return render(req,'admindashboard.html',{'data':a_data , 'add_item':True})   
+    return redirect('Login') 
+
+def show_item(req):
+    if 'a_data' in req.session:
+        a_data=req.session.get('a_data')
+        all_items = Item.objects.all()
+        return render(req,'admindashboard.html',{'data':a_data , 'show_item':True , 'all_items':all_items})
+    return redirect('Login')
   
 
 
@@ -368,7 +404,7 @@ def updated_query(req, pk):
             d = req.POST.get('department')
             q = req.POST.get('query')
             old_q_data = Query.objects.get(id=pk)
-            old_q_data.Departments = d
+            old_q_data.Dept = d
             old_q_data.Query = q
             old_q_data.save()
             messages.success(req, "Query updated successfully")
@@ -414,6 +450,9 @@ def emp_q_delete(req, id):
 
 
 
+
+from django.db.models import Q 
+
 def search(req):
     if 'emp_id' in req.session:
         e_id = req.session.get('emp_id')
@@ -422,8 +461,12 @@ def search(req):
           s=req.POST.get('search')
 
         #   all_query = Query.objects.filter(Email=emp_data.Email,Query=s)
-          all_query = Query.objects.filter(Email__icontains=emp_data.Email,Query__icontains=s)
-          return render(req, 'empdashboard.html', {'data':emp_data,'allquery':True , 'all_query':all_query})
+        #   all_query = Query.objects.filter(Email__icontains=emp_data.Email,Query__icontains=s)
+        #   all_query = Query.objects.filter(Email=emp_data.Email,Query__icontains=s)
+        #   all_query = Query.objects.filter(Email=emp_data.Email,Query__icontains=s , Dept__icontains=s)
+        #   all_query = Query.objects.filter(Email=emp_data.Email and (Q(Query__icontains=s) | Q(Dept__icontains=s)))
+          all_query = Query.objects.filter(Email=emp_data.Email).filter(Q(Query__icontains=s) | Q(Dept__icontains=s))
+          return render(req, 'empdashboard.html', {'data':emp_data, 'allquery':True , 'all_query':all_query ,'s':s})
     else:
         return redirect('Login')
    

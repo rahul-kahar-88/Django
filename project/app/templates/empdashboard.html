@@ -287,11 +287,12 @@
 
            <form action="{% url 'search' %}" method="post">
                {% csrf_token %}
-                <input type="text" name="search">
+                <input type="text" name="search" value="{{s}}">
                 <button>search</button>
-                <br>
+            </form>
                 <a href="{% url 'allquery' %}">reset</a>
                 <br>
+                
 
     <h4 class="mb-3">All Queries</h4>
 

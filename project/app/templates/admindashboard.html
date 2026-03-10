@@ -92,6 +92,8 @@
             <a href="{% url 'show_emp' %}">Show Employee</a>
             <a href="{% url 'emp_all_query' %}">Employee Query</a>
             <a href="#">Profile</a>
+            <a href="{% url 'add_item' %}">Add item</a>
+            <a href="{% url 'show_item' %}">Show item</a>
         </div>
 
         <!-- CONTENT -->
@@ -439,12 +441,134 @@
                     
                 </div>
             </div>
+
             {% endif %}
             
         </div>
-        </div>          
+    </div>          
+    
+    {% elif add_item %}
 
-           
+            <div class="container mt-5">
+        <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+        <div class="card shadow p-4">
+
+        <h4 class="text-center mb-4">Add Item</h4>
+
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+        <label class="form-label">Item Name</label>
+        <input type="text" name="item_name" class="form-control">
+        </div>
+
+        <div class="mb-3">
+        <label class="form-label">Description</label>
+        <input type="text" name="item_desc" class="form-control">
+        </div>
+
+        <div class="mb-3">
+        <label class="form-label">Price</label>
+        <input type="number" name="item_price" class="form-control">
+        </div>
+
+        <div class="mb-3">
+        <label class="form-label">Color</label>
+        <input type="text" name="item_color" class="form-control">
+        </div>
+
+        <div class="mb-3">
+        <label class="form-label">Category</label>
+        <input type="text" name="item_category" class="form-control">
+        </div>
+
+        <div class="mb-3">
+        <label class="form-label">Quantity</label>
+        <input type="number" name="item_quantity" class="form-control">
+        </div>
+
+        <div class="mb-3">
+        <label class="form-label">Item Image</label>
+        <input type="file" name="item_image" class="form-control">
+        </div>
+
+        <div class="text-center">
+        <button type="submit" class="btn btn-primary w-100">Add Item</button>
+        </div>
+
+        </form>
+
+        </div>
+        </div>
+        </div>
+        </div>
+
+
+        {% elif show_item %}
+
+
+        
+       <div class="container mt-4">
+    <div class="row">
+<style>
+.product-img{
+    height:180px;
+    object-fit:cover;
+}
+</style>
+
+<div class="container">
+<div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-2">
+
+{% for i in all_items %}
+
+<div class="col">
+    <div class="card h-100 shadow-sm">
+
+        <img src="{{ i.item_image.url }}" 
+             class="card-img-top product-img" 
+             alt="{{ i.item_name }}">
+
+        <div class="card-body p-2">
+
+            <h6 class="card-title mb-1">{{ i.item_name }}</h6>
+
+            <p class="card-text small mb-1">
+                {{ i.item_desc }}
+            </p>
+
+            <p class="fw-bold mb-1">
+                ${{ i.item_price }}
+            </p>
+
+            <p class="small text-muted mb-2">
+                {{ i.item_color }} | {{ i.item_category }}
+            </p>
+
+            <a href="#" class="btn btn-primary btn-sm w-100">
+                Pay Now
+            </a>
+
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+</div>
+</div>
+
+    </div>
+</div>
+            
+       
+            
+
+
 
 
             {% endif %}
