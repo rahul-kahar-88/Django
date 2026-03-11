@@ -2,7 +2,7 @@ from django.shortcuts import render ,redirect
 from app.models import *
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.views.decorators.cache import never_cache
+
 
 
 # Create your views here.
@@ -110,8 +110,10 @@ def Login(req):
                    return redirect('empdashboard')
                 else:
                    messages.warning(req,'Email and password not match')
+                   return redirect('Login') 
             else:
                 messages.warning(req,'you are not my employees')
+                return redirect('Login')
             
     return render(req,'Login.html')
 
@@ -130,7 +132,7 @@ def userdeshboard(req):
         x=req.session.get('user_id')
         userdata = Employee.objects.get(id=x)
         return render(req, 'userdeshboard.html',{'data':userdata})
-    return redirect('Login')
+    return render('Login')
 
 def admindashboard(req):
     if 'a_data' in req.session:
@@ -142,7 +144,7 @@ def admindashboard(req):
 
 
 
-@never_cache
+
 def logout(req):
     if 'user_id' in req.session:
         req.session.flush()
@@ -292,15 +294,17 @@ def add_item(req):
             return redirect('admindashboard')
         else:
             a_data=req.session.get('a_data')
-            return render(req,'admindashboard.html',{'data':a_data , 'add_item':True})   
-    return redirect('Login') 
+            return render(req,'admindashboard.html',{'data':a_data , 'add_item':True})  
+    else: 
+        return redirect('Login') 
 
 def show_item(req):
     if 'a_data' in req.session:
         a_data=req.session.get('a_data')
         all_items = Item.objects.all()
         return render(req,'admindashboard.html',{'data':a_data , 'show_item':True , 'all_items':all_items})
-    return redirect('Login')
+    else:
+        return redirect('Login')
   
 
 
@@ -343,7 +347,8 @@ def query(req):
       emp_data = Add_Employee.objects.get(id=eid)
       departments = Department.objects.all()
       return render(req,'empdashboard.html',{'data':emp_data , 'query':True ,'emp_dept':departments })
-   return redirect('Login')
+   else:
+      return redirect('Login')
   
 def querydata(req):
     if 'emp_id' in req.session:
@@ -358,7 +363,8 @@ def querydata(req):
          emp_data = Add_Employee.objects.get(id=eid)
          departments = Department.objects.all()
          return render(req,'empdashboard.html',{'data':emp_data , 'query':True ,'emp_dept':departments })
-    return redirect('Login')
+    else:
+        return redirect('Login')
 
 
 def allquery(req):
