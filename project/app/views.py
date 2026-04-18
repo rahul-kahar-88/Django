@@ -155,6 +155,8 @@ def logout(req):
     else:
         return redirect('Login')
 
+        # admin dashboard views
+
 
 def add_dep(req):
     if 'a_data' in req.session:
@@ -309,21 +311,7 @@ def show_item(req):
 
 
 
-# def profile(req):
-#     if 'a_data' in req.session:
-#         a_data = req.session.get('a_data')
-#         return render(req,'empdashboard.html',{'data':a_data , 'profile':True})
-#     else:
-#         return redirect('empdashboard')
-
-
-# def Show_profile(req):
-#     if 'a_data' in req.session:
-#         a_data = req.session.get('a_data')
-#         profile = Add_Employee.objects.all()
-#         return render(req,'empdashboard.html',{'data':a_data , 'show_profile':True,  'profile':profile})
-#     else:
-#         return redirect('empdashboard')
+   #  employee dashboard views
   
 
 def profile(req):
@@ -480,3 +468,65 @@ def search(req):
     else:
         return redirect('Login')
    
+
+
+       #  payment gateway integration
+
+
+def payment(req, pk):
+    if 'a_data' in req.session:
+        a_data = req.session.get('a_data')
+        item_detail = Item.objects.get(id=pk)
+        return render(req,'payment.html', {'item_detail': item_detail, 'data':a_data})
+    
+
+
+import razorpay
+
+def pay_amount(req,pk):
+    if 'a_data' in req.session:
+        if req.method == 'POST':
+            amount1 = req.POST.get('itemprice')
+            print(amount1)
+            print(type(amount1))
+            amount = int(amount1) * 100
+            client = razorpay.Client(auth =("rzp_test_pr99iascS1WRtU" , "UTDIzPGwICnAssu3Q3lk7zUi"))
+            data = { "amount": amount, "currency": "INR", "receipt": "order_rcptid_11" }
+            payment = client.order.create(data=data)     
+            print(payment)
+            a_data=req.session.get('a_data')
+            item_detail = Item.objects.get(id=pk)
+            # {
+            #     'amount': amount,
+            #     'amount_due': amount,
+            #     'amount_paid': 0,
+            #     'attempts': 0,
+            #     'created_at': 1700000000,
+            #     'currency': 'INR',
+            #     'entity': 'order',
+            #     'id': 'order_9A33XWu170gUtm',
+            #     'notes': [],
+            #     'offer_id': None,
+            #     'receipt': 'order_rcptid_11',
+            #     'status': 'created',
+            # }
+            Order.objects.create(
+                order_id=payment.get('id'), 
+                amount=int(amount1)
+                )
+            return render(req, 'payment.html', {'payment': payment, 'amount': amount1 , 'data':a_data , 'item_detail':item_detail})
+    
+
+def pay_status(req, pk):
+    print(req.POST)
+    rpi=req.POST.get('razorpay_payment_id')
+    roi=req.POST.get('razorpay_order_id')
+    old_roi = Order.objects.get(order_id=roi)
+    old_roi.razorpay_id = rpi
+    old_roi.status = True
+    old_roi.save()
+    return render(req,'success.html', {'order': old_roi})
+
+
+
+        

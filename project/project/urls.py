@@ -22,6 +22,10 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+
+
+         # User Dashboard URLS
+         
     path('admin/', admin.site.urls),
     path('',views.index,name='index'),
     path('Registration/',views.Registration,name='Registration'),
@@ -29,6 +33,8 @@ urlpatterns = [
     path('userdeshboard/',views.userdeshboard,name='userdeshboard'),
     path('logout/',views.logout,name='logout'),
 
+
+           # Admin Dashboard URLS
 
     path('admindashboard/',views.admindashboard,name='admindashboard'),
     path('admindashboard/add_dep/',views.add_dep,name='add_dep'),
@@ -44,6 +50,8 @@ urlpatterns = [
     path('admindashboard/show_item/',views.show_item,name='show_item'),
 
 
+        # Employee Dashboard URLS
+
     path('empdashboard/',views.empdashboard,name='empdashboard'),
     path('empdashboard/profile/',views.profile,name='profile'),
     path('empdashboard/setting/',views.setting,name='setting'),
@@ -58,6 +66,14 @@ urlpatterns = [
     path('empdashboard/allquery/search/', views.search, name='search'),
 
 
+
+         # Payment Gateway URLS
+
+    path('admindashboard/show_item/payment/<int:pk>/',views.payment,name='payment'),
+    path('pay_amount/<int:pk>/',views.pay_amount,name='pay_amount'),
+    path('pay_status/<int:pk>/',views.pay_status,name='pay_status'),
+
+ 
   
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

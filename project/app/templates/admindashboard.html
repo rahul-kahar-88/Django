@@ -525,15 +525,17 @@
 <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-2">
 
 {% for i in all_items %}
-
-<div class="col">
-    <div class="card h-100 shadow-sm">
+<form action="{% url 'payment' pk=i.id %}" method="post">
+    {% csrf_token %}
+    
+    <div class="col">
+        <div class="card h-100 shadow-sm">
 
         <img src="{{ i.item_image.url }}" 
              class="card-img-top product-img" 
              alt="{{ i.item_name }}">
 
-        <div class="card-body p-2">
+             <div class="card-body p-2">
 
             <h6 class="card-title mb-1">{{ i.item_name }}</h6>
 
@@ -542,20 +544,22 @@
             </p>
 
             <p class="fw-bold mb-1">
-                ${{ i.item_price }}
+                {{ i.item_price }}
             </p>
 
             <p class="small text-muted mb-2">
                 {{ i.item_color }} | {{ i.item_category }}
             </p>
-
-            <a href="#" class="btn btn-primary btn-sm w-100">
+            
+           
+                <button type="submit" class="btn btn-sm btn-primary w-100">
                 Pay Now
-            </a>
-
+                </button>
+            
         </div>
     </div>
 </div>
+</form>
 
 {% endfor %}
 

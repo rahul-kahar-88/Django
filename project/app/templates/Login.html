@@ -15,17 +15,15 @@
 
           <h3 class="text-center mb-4">Login</h3>
 
-          {% if x %}
+          {% if messages %}
             <div class="alert alert-info">
-              {{ x }}
+              {% for message in messages %}
+                {{ message }}
+              {% endfor %}
             </div>
           {% endif %}
 
-          {% if msg %}
-            <div class="alert alert-danger">
-              {{ msg }}
-            </div>
-          {% endif %}
+          
 
           <form method="POST">
             {% csrf_token %}

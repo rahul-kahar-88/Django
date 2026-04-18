@@ -49,3 +49,11 @@ class Item(models.Model):
     item_color=models.CharField(max_length=20)
     item_category=models.CharField(max_length=40)
     item_quantity=models.IntegerField(null=True)
+
+
+
+class Order(models.Model):
+    order_id=models.CharField(max_length=100 )
+    amount=models.IntegerField()
+    razorpay_id=models.CharField(max_length=100 ,blank=True)
+    status=models.BooleanField(default=False )
